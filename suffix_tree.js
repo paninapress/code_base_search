@@ -82,7 +82,9 @@ SuffixTree = (function() {
   // word, like banana :)
   // the meat and potatoes are cooked by SuffixTree.prototype.add
   SuffixTree.prototype.learn = function(word) {
-    var suffix = "$";
+    var suffix = "";
+    // use delimeter function
+    word += SuffixTree.delimiter;
     for (var i = word.length - 1; i >= 0; i--){
       suffix = word[i] + suffix;
       this.add(suffix);
