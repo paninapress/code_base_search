@@ -27,7 +27,8 @@ describe("SuffixTree", function() {
             function(spy_call){return spy_call.args;}
           )
         ).toEqual(
-          [['a$'], ['na$'], ['ana$'], ['nana$'], ['anana$'], ['banana$']]
+        //add the $ here
+          [['$'], ['a$'], ['na$'], ['ana$'], ['nana$'], ['anana$'], ['banana$']]
         );
       }
     );
