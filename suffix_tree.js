@@ -96,40 +96,40 @@ SuffixTree = (function() {
     if (this.suffixes().length === 0){
       this[suffix] = new SuffixTree();
     }
-    var i = 0;
-    var sliceAt = 1;
-    for (var key in this.suffixes()){
-      console.log(this.suffixes());
-      if (key[0] === suffix[0]){
-        for (var x = 1; x <= suffix.length - 1; i++){
-          if (key[x] === suffix[x]){
-            sliceAt = x + 1;
-          }
-          else {
-            break;
+ 
+      var sliceAt = 1;
+      var keys = this.suffixes();
+      console.log(keys);
+      for (var i = 0; i <= keys.length - 1; i++){
+        console.log("this key is " + keys[i]);
+        if (keys[i][0] === suffix[0]){
+          for (var x = 1; x <= suffix.length - 1; i++){
+            if (keys[i][x] === suffix[x]){
+              sliceAt = x + 1;
+            }
+            else {
+              // left half stays the same key
+              var left_key = keys[i].slice(0, sliceAt);
+              this[left_key] = keys[i];
+
+              // right half splits off to new node
+              var right_key = keys[i].slice(sliceAt);
+              this[right_key] = new SuffixTree();
+                if (suffix.length - 1 < sliceAt){
+                // remaining suffix goes through the 
+                // add process of the left half
+                var restOfSuffix = suffix.slice(sliceAt);
+                left_key.add(restOfSuffix);
+                console.log("left key adds " + restOfSuffix);
+                }
+            }
           }
         }
-        console.log("this key is" + key);
-
-        // left half stays the same key
-        var left_key = key.slice(0, sliceAt);
-        this[left_key] = key;
-
-        // right half splits off to new node
-        var right_key = key.slice(sliceAt);
-        this[right_key] = new SuffixTree();
-        if (suffix.length - 1 < sliceAt){
-          // remaining suffix goes through the 
-          // add process of the left half
-          var restOfSuffix = suffix.slice(sliceAt);
-          left_key.add(restOfSuffix);
-          console.log("left key adds" + restOfSuffix);
+        else {
+          this[suffix] = new SuffixTree();
+          console.log("keys didn't match");
         }
-      }
-      else {
-        this[suffix] = new SuffixTree();
-      }     
-    }
+      }  
   };
 
   // this just returns the SuffixTree to the outside world for usage
